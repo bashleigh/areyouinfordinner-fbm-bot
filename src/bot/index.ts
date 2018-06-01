@@ -1,5 +1,5 @@
 import group from './group';
 
-export default (bot) => {
-    bot.module(group);
+export default bot => {
+  bot.module(group);
 };

@@ -25,5 +25,5 @@ export default class AppService {
 
   messages = messages => {
     this.bot.handleFacebookData(messages);
-  }
+  };
 }
