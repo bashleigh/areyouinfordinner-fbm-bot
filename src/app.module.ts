@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import AppService from './app.service';
+import ConfigService from '@bashleigh/nest-config';
 
 @Module({
-  imports: [],
+  imports: [ConfigService],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService],
 })
 export class AppModule {}

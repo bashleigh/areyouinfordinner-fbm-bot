@@ -17,6 +17,7 @@
     "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
+    "@bashleigh/nest-config": "^0.1.0",
     "@nestjs/common": "^5.0.0",
     "@nestjs/core": "^5.0.0",
     "@nestjs/microservices": "^5.0.0",
@@ -32,9 +33,10 @@
     "@types/jest": "^21.1.8",
     "@types/node": "^9.3.0",
     "@types/supertest": "^2.0.4",
+    "bootbot": "^1.0.15",
     "jest": "^21.2.1",
     "nodemon": "^1.14.1",
-    "prettier": "^1.11.1",
+    "prettier": "^1.13.4",
     "supertest": "^3.0.0",
     "ts-jest": "^21.2.4",
     "ts-loader": "^4.1.0",
