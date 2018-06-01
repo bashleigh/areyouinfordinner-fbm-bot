@@ -13,7 +13,7 @@ export default class AppService {
     private readonly config: ConfigService,
   ) {
     this.bot = new BootBot({
-      AppService: config.get('FACEBOOK_APP_SERVICE'),
+      appSecret: config.get('FACEBOOK_APP_SECRET'),
       accessToken: this.config.get('FACEBOOK_ACCESS_TOKEN'),
       verifyToken: this.config.get('FACEBOOK_VERIFY_TOKEN'),
     });
