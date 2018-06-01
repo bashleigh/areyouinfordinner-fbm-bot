@@ -2,12 +2,13 @@
 # yarn lockfile v1
 
 
-"@bashleigh/nest-config@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@bashleigh/nest-config/-/nest-config-0.1.0.tgz#68b1fae2825c39659e411cd8c98ffbfc13c89c97"
+"@bashleigh/nest-config@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@bashleigh/nest-config/-/nest-config-0.1.2.tgz#7322aa1384ad890086bde4ad4a3ad61066a0f74e"
   dependencies:
-    class-validator "^0.8.1"
+    "@nestjs/common" "^5.0.1"
     dotenv "^5.0.0"
+    reflect-metadata "^0.1.12"
     rxjs "^5.4.2"
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
@@ -17,7 +18,7 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@nestjs/common@^5.0.0":
+"@nestjs/common@^5.0.0", "@nestjs/common@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-5.0.1.tgz#98378d3578c8d1f337452b06f83abad42e1e0cee"
   dependencies:
@@ -1620,12 +1621,6 @@ class-utils@^0.3.5:
     define-property "^0.2.5"
     isobject "^3.0.0"
     static-extend "^0.1.1"
-
-class-validator@^0.8.1:
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/class-validator/-/class-validator-0.8.5.tgz#484785acda98f68549c3a84dc1bb2f77b736dc58"
-  dependencies:
-    validator "9.2.0"
 
 cli-boxes@^1.0.0:
   version "1.0.0"
@@ -6656,10 +6651,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-validator@9.2.0:
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-9.2.0.tgz#ad216eed5f37cac31a6fe00ceab1f6b88bded03e"
 
 vary@^1, vary@~1.1.2:
   version "1.1.2"
