@@ -8,6 +8,8 @@ facebook messenger bot for areyouinfordinner
 ## Installation
 
 ```bash
+$ cp .env.example .env
+$ cp ormconfig.json.dist ormconfig.json 
 $ yarn
 ```
 
