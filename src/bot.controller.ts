@@ -28,6 +28,10 @@ export default class BotController {
 
   @Post('webhook')
   webhook(@Req() request) {
+    console.log(
+      'body',
+      request.body.entry[0].messaging[0].message.nlp.entities,
+    );
     this.botService.messages(request.body);
   }
 }

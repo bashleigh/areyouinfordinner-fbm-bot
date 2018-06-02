@@ -43,18 +43,14 @@ const options = convo => {
   );
 };
 
-export default (UserService) => bot => {
-  console.log('bot', bot);
-  console.log('userservice', UserService);
+export default UserService => bot => {
   bot.hear([/start/i, /go/i], (payload, chat) => {
-
-    const localUser = UserService.find(user.id);
-
-    console.log('localUser', localUser);
-
     // TODO authenticate this user with user entity and userId
 
-    chat.getUserProfile().then(user => {
+    chat.getUserProfile().then(async user => {
+      const localUser = await UserService.find(user.id);
+      console.log('localUser', localUser);
+
       console.log('user', user);
       chat
         .say(`Well hello there, ${user.first_name}!`, {
@@ -63,7 +59,7 @@ export default (UserService) => bot => {
         .then(() => {
           chat
             .say(
-              "I'm a hungry burger! I'm here to help you and your family prepare for dinner :)",
+              "I'm Hammy! I'm here to help you and your family prepare for dinner :) beep",
               {
                 typing: true,
               },

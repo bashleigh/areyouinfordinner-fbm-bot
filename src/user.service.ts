@@ -14,23 +14,23 @@ export default class UserService {
    * @param userId: number
    */
   async find(userId: number): Promise<User> {
-      return await this.userRepository.findOne({
-          where: {
-            userId,
-          },
-      });
+    return await this.userRepository.findOne({
+      where: {
+        userId,
+      },
+    });
   }
 
   /**
    * @param userId: number
    */
   async create(userId: number): Promise<User> {
-      const user = this.userRepository.create({
-          userId,
-      });
+    const user = this.userRepository.create({
+      userId,
+    });
 
-      this.userRepository.save(user);
+    this.userRepository.save(user);
 
-      return user;
+    return user;
   }
 }
