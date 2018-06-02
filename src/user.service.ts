@@ -22,9 +22,9 @@ export default class UserService {
   }
 
   /**
-   * @param UserId: number
+   * @param userId: number
    */
-  async create(UserId: number): Promise<User> {
+  async create(userId: number): Promise<User> {
       const user = this.userRepository.create({
           userId,
       });

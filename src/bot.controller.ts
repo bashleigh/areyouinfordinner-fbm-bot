@@ -9,7 +9,7 @@ import BotService from './bot.service';
 import { ConfigService } from '@bashleigh/nest-config';
 
 @Controller('/messenger')
-export class AppController {
+export default class BotController {
   constructor(
     private readonly botService: BotService,
     private readonly config: ConfigService,
