@@ -14,6 +14,7 @@ import Group from './group.entity';
 export default class User extends Base {
   @Column({
     type: 'bigint',
+    unique: true,
   })
   userId: number;
 

@@ -5,13 +5,13 @@ import {
   Post,
   BadRequestException,
 } from '@nestjs/common';
-import AppService from './app.service';
+import BotService from './bot.service';
 import { ConfigService } from '@bashleigh/nest-config';
 
 @Controller('/messenger')
 export class AppController {
   constructor(
-    private readonly appService: AppService,
+    private readonly botService: BotService,
     private readonly config: ConfigService,
   ) {}
 
@@ -28,6 +28,6 @@ export class AppController {
 
   @Post('webhook')
   webhook(@Req() request) {
-    this.appService.messages(request.body);
+    this.botService.messages(request.body);
   }
 }
