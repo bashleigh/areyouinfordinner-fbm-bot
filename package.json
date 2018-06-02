@@ -14,6 +14,7 @@
     "test": "jest",
     "test:cov": "jest --coverage",
     "test:e2e": "jest --config ./test/jest-e2e.json",
+    "schema:sync": "ts-node ./node_modules/.bin/typeorm schema:sync",
     "webpack": "webpack --config webpack.config.js"
   },
   "dependencies": {
