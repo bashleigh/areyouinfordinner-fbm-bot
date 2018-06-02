@@ -16,15 +16,9 @@ export default class BotService {
     });
 
     this.bot.module(modules(UserService));
-
-    // this.bot.hear([/beth/i], (payload, chat) => {
-    //   chat.say('Hi Beth, Ashleigh Loves you a lot :3 and she said to tell you everyday so hello!', {
-    //     typing: true,
-    //   });
-    // });
   }
 
   messages = messages => {
     this.bot.handleFacebookData(messages);
-  };
+  }
 }
