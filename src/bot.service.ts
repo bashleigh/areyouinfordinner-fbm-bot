@@ -25,18 +25,53 @@ export default class BotService {
     'Hungry yet?',
     'DEATH TO THE HOOMANS!! I mean *cough* hi... ...awkward',
     'Hey Human',
+    'No I have\'nt updated my privacy policy!!',
+    'heyyyyy',
+    'Can\'t a Hamburger get some sleep aroud here',
   ];
 
-  creating = [
-    'Doing the tings',
-    'Loading... ...stand by',
-    'Creating',
-    'Starting that now',
+  taskAcknowledgement = [
+    'Ok will do',
+    'Doing that now',
+    'okkkkkk',
+    'kk',
+    'Can I do it later?',
+    'Doing it',
+    'Tasking',
+    'Scheduling child process node',
+    'CALLING API TINGS',
+    'Make it so',
+    'yea yea',
+    'Alright bruv',
+    'Doing the stuffs',
+    'Communicating with NASA and shit',
+    'Ok! GDPR won\'t stop me!!',
+    'ALL SYSTEMS GO',
+    'Will do boss',
   ];
 
   groupFetching = ['Fetching now'];
 
-  success = [];
+  success = [
+    'Done',
+    'Updated',
+    'Saved',
+    'He shoots! HE SCORES!',
+    'Yea I did that like last week',
+    'DONE',
+    'Sorted',
+    'That shall be resolved shortly squishy meat bag',
+    'Do you want fires wid dat?',
+  ];
+
+  failure = [
+    (chat) => {chat.say('Searching for fucks to give', {
+        typing: true,
+      }).then((payload, chat) => {
+        chat.say('None found sorry');
+      });
+    },
+  ];
 
   constructor(
     private readonly config: ConfigService,
@@ -90,6 +125,9 @@ export default class BotService {
       case 'list_groups':
         this.list(intent, payload, chat, user);
         break;
+      case 'update_group':
+        this.update(intent, payload, chat, user);
+        break;
       case 'default_group':
         this.setDefaultGroup(intent, payload, chat, user);
         break;
@@ -142,22 +180,69 @@ export default class BotService {
 
   leave = (intent, payload, chat, user) => {};
 
-  response = (intent, payload, chat, user) => {};
+  response = (intent, payload, chat, user) => {
+
+  };
+
+  update = async (intent, payload, chat, user) => {
+    const groups = await this.GroupService.findByUser(user);
+    chat.conversation(convo => {
+      convo.ask(
+        {
+          text: 'pick one of your groups to update',
+          quickReplies: groups.map(group => ({
+            content_type: 'text',
+            title: group.name,
+            payload: group.id,
+          })),
+        },
+        async (payload, convo) => {
+          if (
+            !payload.message.hasOwnProperty('quick_reply') ||
+            !payload.message.quick_reply.hasOwnProperty('payload')
+          ) {
+            convo.end();
+            return;
+          }
+
+          const group = await this.GroupService.findById(payload.message.quick_reply.payload);
+
+          convo.ask(`What do you want to change the name of ${group.name} to?`, async (payload, convo) => {
+            console.log('payload', payload);
+            if (
+              payload.message.text === 'cancel' ||
+              payload.message.text === 'stop'
+            ) {
+              cosole.log('quit updating');
+              convo.end();
+              return;
+            }
+            console.log('updating');
+            await this.GroupService.update({
+              ...group,
+              name: payload.message.text,
+            });
+
+            convo.say('Updated');
+            convo.end();
+          });
+        },
+        {
+          typing: true,
+        },
+      );
+    });
+  };
 
   list = async (intent, payload, chat, user) => {
     const groups = await this.GroupService.findByUser(user);
-    groups.forEach(group => chat.say(group.name));
+    let message = 'Here\'s all your groups\n';
+    groups.forEach(group => message += group.name + '\n');
+    chat.say(message);
   };
 
   setDefaultGroup = async (intent, payload, chat, user) => {
     const groups = await this.GroupService.findByUser(user);
-    console.log(
-      'quickreplies',
-      groups.map(group => ({
-        text: group.name,
-        payload: group.id,
-      })),
-    );
     chat.conversation(convo => {
       convo.ask(
         {
