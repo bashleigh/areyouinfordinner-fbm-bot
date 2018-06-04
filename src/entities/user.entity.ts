@@ -18,6 +18,12 @@ export default class User extends Base {
   })
   userId: number;
 
+  @Column()
+  firstname: string;
+
+  @Column()
+  lastname: string;
+
   @ManyToMany(type => Group, group => group.users)
   @JoinTable()
   groups: Group[];

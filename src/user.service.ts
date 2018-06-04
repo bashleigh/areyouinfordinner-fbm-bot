@@ -10,9 +10,6 @@ export default class UserService {
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
 
-  /**
-   * @param userId: number
-   */
   async find(userId: number): Promise<User> {
     return await this.userRepository.findOne({
       where: {
@@ -21,16 +18,21 @@ export default class UserService {
     });
   }
 
-  /**
-   * @param userId: number
-   */
-  async create(userId: number): Promise<User> {
-    const user = this.userRepository.create({
-      userId,
-    });
-
-    this.userRepository.save(user);
-
-    return user;
+  async create(fbUser): Promise<User> {
+   return await this.userRepository.save(this.userRepository.create({
+        userId: fbUser.id,
+        firstname: fbUser.first_name,
+        lastname: fbUser.last_name,
+      }));
   }
+
+  async update(fbUser, user): Promise<User> {
+    return await this.userRepository.save({
+        ...user,
+        ...{
+            firstname: fbUser.first_name,
+            lastname: fbUser.last_name,
+        },
+    });
+   }
 }
