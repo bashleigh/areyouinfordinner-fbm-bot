@@ -1,11 +1,4 @@
-import {
-  Entity,
-  Column,
-  Index,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, ManyToMany } from 'typeorm';
 
 import Base from './base.entity';
 import Group from './group.entity';
@@ -18,13 +11,15 @@ export default class User extends Base {
   })
   userId: number;
 
-  @Column()
-  firstname: string;
+  @Column() firstname: string;
 
-  @Column()
-  lastname: string;
+  @Column() lastname: string;
+
+  @Column({
+    nullable: true,
+  })
+  defaultGroupId: number = null;
 
   @ManyToMany(type => Group, group => group.users)
-  @JoinTable()
   groups: Group[];
 }

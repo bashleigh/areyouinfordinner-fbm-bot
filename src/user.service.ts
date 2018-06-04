@@ -19,20 +19,26 @@ export default class UserService {
   }
 
   async create(fbUser): Promise<User> {
-   return await this.userRepository.save(this.userRepository.create({
+    return await this.userRepository.save(
+      this.userRepository.create({
         userId: fbUser.id,
         firstname: fbUser.first_name,
         lastname: fbUser.last_name,
-      }));
+      }),
+    );
   }
 
-  async update(fbUser, user): Promise<User> {
+  async updateFB(fbUser, user): Promise<User> {
     return await this.userRepository.save({
-        ...user,
-        ...{
-            firstname: fbUser.first_name,
-            lastname: fbUser.last_name,
-        },
+      ...user,
+      ...{
+        firstname: fbUser.first_name,
+        lastname: fbUser.last_name,
+      },
     });
-   }
+  }
+
+  async update(user): Promise<User> {
+    return await this.userRepository.save(user);
+  }
 }
