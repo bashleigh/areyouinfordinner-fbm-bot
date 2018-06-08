@@ -34,10 +34,18 @@ export default class GroupService {
   }
 
   async findById(id: number): Promise<Group> {
-      return await this.groupRepository.findOne(id);
+    return await this.groupRepository.findOne(id);
   }
 
   async update(group): Promise<Group> {
-      return await this.groupRepository.save(group);
+    return await this.groupRepository.save(group);
+  }
+
+  async findByCode(code: string): Promise<Group | null> {
+    return await this.groupRepository.findOne({
+      where: {
+        code,
+      },
+    });
   }
 }

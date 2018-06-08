@@ -134,6 +134,9 @@ export default class BotService {
       case 'dinner_response':
         this.response(intent, payload, chat, user);
         break;
+      case 'show_code':
+        this.showCode(intent, payload, chat, user);
+        break;
       default:
         chat.say('me no understand');
     }
@@ -176,13 +179,35 @@ export default class BotService {
     });
   };
 
-  join = (intent, payload, chat, user) => {};
+  join = (intent, payload, chat, user) => {
+    chat.conversation(convo => {
+      convo.ask('Sure! Do you know the code?', async (payload, convo) => {
+        if (payload.message.text === 'no', 'cancel', 'stop') {
+          convo.end();
+          return;
+        }
+        const group = await this.GroupService.findByCode(payload);
+
+        if (!group) {
+          convo.say('Sorry, couldn\'t find that group');
+          convo.end();
+          return;
+        }
+
+        group.users.push(user);
+        await this.GroupService.update(group);
+
+        convo.say('Added you to that group yo');
+        convo.end();
+      });
+    });
+  };
 
   leave = (intent, payload, chat, user) => {};
 
   response = (intent, payload, chat, user) => {
 
-  };
+  }
 
   update = async (intent, payload, chat, user) => {
     const groups = await this.GroupService.findByUser(user);
@@ -274,6 +299,40 @@ export default class BotService {
       );
     });
   };
+
+  showCode = async (intent, payload, chat, user) => {
+    const groups = await this.GroupService.findByUser(user);
+
+    if (groups.length === 0) {
+      chat.say('You haven\'t got any groups?');
+      return;
+    } else if (groups.length === 1) {
+      chat.say(groups[0].code);
+      return;
+    }
+
+    chat.conversation(convo => {
+      convo.ask({
+        text: 'Sure, which group?',
+        quickReplies: groups.map(group => ({
+          content_type: 'text',
+          title: group.name,
+          payload: group.code,
+        })),
+      }, async (payload, convo) => {
+        if (
+          !payload.message.hasOwnProperty('quick_reply') ||
+          !payload.message.quick_reply.hasOwnProperty('payload')
+        ) {
+          convo.end();
+          return;
+        }
+        chat.say(`Copy this code and tell your friend to tell me to join that group\nLike this! Join group ${payload.message.quick_reply.payload}`)
+        .then(() => chat.say(payload.message.quick_reply.payload));
+
+      });
+    });
+  }
 
   resolveUser = async fbUser => {
     let localUser = await this.UserService.find(fbUser.id);
