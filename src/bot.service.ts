@@ -327,8 +327,9 @@ export default class BotService {
           convo.end();
           return;
         }
-        chat.say(`Copy this code and tell your friend to tell me to join that group\nLike this! Join group ${payload.message.quick_reply.payload}`)
-        .then(() => chat.say(payload.message.quick_reply.payload));
+        chat.say(payload.message.quick_reply.payload);
+
+        convo.end();
 
       });
     });
