@@ -213,11 +213,9 @@ export default class BotService {
               payload.message.text === 'cancel' ||
               payload.message.text === 'stop'
             ) {
-              cosole.log('quit updating');
               convo.end();
               return;
             }
-            console.log('updating');
             await this.GroupService.update({
               ...group,
               name: payload.message.text,
